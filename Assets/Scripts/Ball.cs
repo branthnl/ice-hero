@@ -55,6 +55,15 @@ public class Ball : MonoBehaviour
             float xDiff = transform.position.x - other.transform.position.x;
             myRigidbody2D.velocity += new Vector2(xDiff, 0);
             speed = Mathf.Min(speed + 0.1f, defaultSpeed * 2);
+            GameManager.Instance.PlaySound("BounceWall");
+        }
+        else if (other.gameObject.CompareTag("Brick"))
+        {
+            GameManager.Instance.PlaySound("BounceBrick");
+        }
+        else
+        {
+            GameManager.Instance.PlaySound("BounceWall");
         }
     }
 }
