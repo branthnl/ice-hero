@@ -6,10 +6,15 @@ public class LevelManager : MonoBehaviour
 {
     public int penguin = 0;
     public int penguinToRescue = 1;
-    public bool isPause;
+    public bool isPause, isGameOver;
     public int levelIndex;
     private Ball mainBall;
-    private Paddle mainPaddle;
+    [HideInInspector]
+    public Paddle mainPaddle;
+    [SerializeField]
+    private GameObject fireworks, pauseButton;
+    [SerializeField]
+    private AudioClip resultMusic;
     [SerializeField]
     TextMeshProUGUI levelText, penguinText;
     [SerializeField]
@@ -24,7 +29,6 @@ public class LevelManager : MonoBehaviour
         mainBall = FindObjectOfType<Ball>();
         mainPaddle = FindObjectOfType<Paddle>();
         levelText.text = "Level " + (levelIndex + 1);
-        mainBall.Respawn();
     }
     private void Update()
     {
@@ -43,11 +47,25 @@ public class LevelManager : MonoBehaviour
     }
     public void GameOver()
     {
-        penguinText.text = penguin + "/" + penguinToRescue;
-        resultPanelAnimator.SetTrigger("In");
-        GameManager.Instance.PlaySound("Yay");
-        // Save progress
-        GameManager.Instance.SaveProgress(levelIndex + 1);
+        if (!isGameOver)
+        {
+            var rbObjects = FindObjectsOfType<Rigidbody2D>();
+            foreach (Rigidbody2D rb in rbObjects)
+            {
+                rb.simulated = !isPause;
+            }
+            penguinText.text = penguin + "/" + penguinToRescue;
+            resultPanelAnimator.SetTrigger("In");
+            GameManager.Instance.PlaySound("Yay");
+            pauseButton.SetActive(false);
+            fireworks.SetActive(true);
+            var ad = GetComponent<AudioSource>();
+            ad.Stop();
+            ad.PlayOneShot(resultMusic);
+            // Save progress
+            GameManager.Instance.SaveProgress(levelIndex + 1);
+            isGameOver = true;
+        }
     }
     public void UserSelectNext()
     {
@@ -64,15 +82,22 @@ public class LevelManager : MonoBehaviour
     public void UserSelectPause()
     {
         isPause = !isPause;
-        mainBall.myRigidbody2D.simulated = !isPause;
-        mainPaddle.myRigidbody2D.simulated = !isPause;
+        // mainBall.myRigidbody2D.simulated = !isPause;
+        // mainPaddle.myRigidbody2D.simulated = !isPause;
+        var rbObjects = FindObjectsOfType<Rigidbody2D>();
+        foreach (Rigidbody2D rb in rbObjects)
+        {
+            rb.simulated = !isPause;
+        }
         if (isPause)
         {
             pausePanelAnimator.SetTrigger("In");
+            pauseButton.SetActive(false);
         }
         else
         {
             pausePanelAnimator.SetTrigger("Out");
+            pauseButton.SetActive(true);
         }
     }
 }

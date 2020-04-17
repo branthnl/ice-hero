@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
         audioClipsKey.Add("BounceBrick", 1);
         audioClipsKey.Add("Pop", 2);
         audioClipsKey.Add("Yay", 3);
+        audioClipsKey.Add("Check", 4);
+        audioClipsKey.Add("Queck", 5);
         LoadProgress();
         SceneManager.LoadScene("Menu");
     }

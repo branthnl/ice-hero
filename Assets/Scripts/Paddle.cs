@@ -36,11 +36,11 @@ public class Paddle : MonoBehaviour
     {
         myRigidbody2D.velocity = Vector2.right * input * speed;
     }
-    // private void OnCollisionEnter2D(Collision2D other)
-    // {
-    //     if (other.gameObject.CompareTag("Penguin"))
-    //     {
-    //         LevelManager.instance.AddPenguin();
-    //     }
-    // }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Penguin"))
+        {
+            GameManager.Instance.PlaySound("Queck");
+        }
+    }
 }

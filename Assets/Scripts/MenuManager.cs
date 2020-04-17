@@ -20,7 +20,7 @@ public class MenuManager : MonoBehaviour
     private GameObject levelButtonPrefab;
     private void Awake()
     {
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 7; ++i)
         {
             AddLevelButton(i);
         }
@@ -87,7 +87,8 @@ public class MenuManager : MonoBehaviour
             ChangeState(MenuState.MainMenu);
         }
     }
-    public void PlayPopSound() {
+    public void PlayPopSound()
+    {
         GameManager.Instance.PlaySound("Pop");
     }
 }

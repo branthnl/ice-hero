@@ -28,19 +28,23 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            transform.position = startPosition + new Vector3(0, Mathf.Sin(Time.time * 10.0f) * 0.05f, 0);
+            transform.position = startPosition + new Vector3(LevelManager.instance.mainPaddle.transform.position.x, Mathf.Sin(Time.time * 10.0f) * 0.05f, 0);
         }
     }
-    // public void Start()
-    // {
-    //     Invoke("Respawn", 3.0f);
-    // }
+    public void Start()
+    {
+        Invoke("Respawn", 1.0f);
+    }
     public void Respawn()
     {
         isMoving = false;
         myRigidbody2D.velocity = Vector2.zero;
-        transform.position = startPosition;
-        Invoke("FirstMove", 1.0f);
+        if (!LevelManager.instance.isGameOver)
+        {
+            GameManager.Instance.PlaySound("Check");
+            transform.position = startPosition + new Vector3(LevelManager.instance.mainPaddle.transform.position.x, Mathf.Sin(Time.time * 10.0f) * 0.05f, 0);
+            Invoke("FirstMove", 1.0f);
+        }
     }
     public void FirstMove()
     {
@@ -53,13 +57,17 @@ public class Ball : MonoBehaviour
         if (other.gameObject.CompareTag("Paddle"))
         {
             float xDiff = transform.position.x - other.transform.position.x;
-            myRigidbody2D.velocity += new Vector2(xDiff, 0);
+            myRigidbody2D.velocity += new Vector2(xDiff * 3.0f, 0);
             speed = Mathf.Min(speed + 0.1f, defaultSpeed * 2);
             GameManager.Instance.PlaySound("BounceWall");
         }
         else if (other.gameObject.CompareTag("Brick"))
         {
             GameManager.Instance.PlaySound("BounceBrick");
+        }
+        else if (other.gameObject.CompareTag("Penguin"))
+        {
+            GameManager.Instance.PlaySound("Queck");
         }
         else
         {

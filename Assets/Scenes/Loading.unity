@@ -348,7 +348,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c8964b85ce07d1a4d94e02323fabc555, type: 3}
   - {fileID: 8300000, guid: 44a781c00bc5d754e8123c9a1a723308, type: 3}
   - {fileID: 8300000, guid: e08a0864b92655c4fb1c517afd8d97ed, type: 3}
-  - {fileID: 8300000, guid: 9f599c1c854697c4a883e568e1ff9c97, type: 3}
+  - {fileID: 8300000, guid: 944f9178202353748a0cf73bfc0f01b3, type: 3}
+  - {fileID: 8300000, guid: 2850bd547da960e449190bf09888ef6c, type: 3}
+  - {fileID: 8300000, guid: 4196576199f00cf4ca3295fb99ac5007, type: 3}
   seAudioSource: {fileID: 656075744}
 --- !u!4 &656075746
 Transform:
