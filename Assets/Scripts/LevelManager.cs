@@ -45,6 +45,9 @@ public class LevelManager : MonoBehaviour
     {
         penguinText.text = penguin + "/" + penguinToRescue;
         resultPanelAnimator.SetTrigger("In");
+        GameManager.Instance.PlaySound("Yay");
+        // Save progress
+        GameManager.Instance.SaveProgress(levelIndex + 1);
     }
     public void UserSelectNext()
     {

@@ -29,11 +29,20 @@ public class MenuManager : MonoBehaviour
     {
         GameObject n = Instantiate(levelButtonPrefab);
         Button btn = n.GetComponent<Button>();
-        btn.GetComponentInChildren<TextMeshProUGUI>().text = (levelIndex + 1).ToString();
-        btn.onClick.AddListener(() =>
+        TextMeshProUGUI tm = btn.GetComponentInChildren<TextMeshProUGUI>();
+        tm.text = (levelIndex + 1).ToString();
+        if (GameManager.Instance.progress >= levelIndex)
         {
-            UserSelectLevel("Level" + (levelIndex + 1));
-        });
+            btn.onClick.AddListener(() =>
+            {
+                UserSelectLevel("Level" + (levelIndex + 1));
+            });
+        }
+        else
+        {
+            btn.interactable = false;
+            tm.color = new Color(0.5f, 0.5f, 0.5f, 1);
+        }
         n.transform.SetParent(levelButtonParent);
         n.transform.localScale = Vector2.one;
     }
@@ -59,10 +68,12 @@ public class MenuManager : MonoBehaviour
     }
     public void UserSelectLevel(string levelName)
     {
+        PlayPopSound();
         SceneManager.LoadScene(levelName);
     }
     public void UserSelectPlay()
     {
+        PlayPopSound();
         ChangeState(MenuState.LevelSelection);
     }
     public void UserSelectBack()
@@ -75,5 +86,8 @@ public class MenuManager : MonoBehaviour
         {
             ChangeState(MenuState.MainMenu);
         }
+    }
+    public void PlayPopSound() {
+        GameManager.Instance.PlaySound("Pop");
     }
 }

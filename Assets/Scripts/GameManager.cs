@@ -1,8 +1,10 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public int progress;
     [SerializeField]
     private AudioClip[] audioClips;
     [SerializeField]
@@ -27,6 +29,10 @@ public class GameManager : MonoBehaviour
         audioClipsKey = new Dictionary<string, int>();
         audioClipsKey.Add("BounceWall", 0);
         audioClipsKey.Add("BounceBrick", 1);
+        audioClipsKey.Add("Pop", 2);
+        audioClipsKey.Add("Yay", 3);
+        LoadProgress();
+        SceneManager.LoadScene("Menu");
     }
     public void PlaySound(string key)
     {
@@ -34,5 +40,14 @@ public class GameManager : MonoBehaviour
         {
             seAudioSource.PlayOneShot(audioClips[audioClipsKey[key]]);
         }
+    }
+    public void SaveProgress(int newProgress)
+    {
+        PlayerPrefs.SetInt("Progress", Mathf.Max(progress, newProgress));
+        LoadProgress();
+    }
+    public void LoadProgress()
+    {
+        progress = PlayerPrefs.GetInt("Progress", 0);
     }
 }
