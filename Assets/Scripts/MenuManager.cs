@@ -35,6 +35,7 @@ public class MenuManager : MonoBehaviour
             UserSelectLevel("Level" + (levelIndex + 1));
         });
         n.transform.SetParent(levelButtonParent);
+        n.transform.localScale = Vector2.one;
     }
     public void ChangeState(MenuState newState)
     {

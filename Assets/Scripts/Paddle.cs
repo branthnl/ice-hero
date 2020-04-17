@@ -9,7 +9,8 @@ public class Paddle : MonoBehaviour
     public Vector2 size = new Vector2(3.0f, 0.9f);
     private SpriteRenderer mySpriteRenderer;
     private BoxCollider2D myBoxCollider2D;
-    private Rigidbody2D myRigidbody2D;
+    [HideInInspector]
+    public Rigidbody2D myRigidbody2D;
     private float input;
     private void Awake()
     {
@@ -21,15 +22,25 @@ public class Paddle : MonoBehaviour
     {
         mySpriteRenderer.size = size;
         myBoxCollider2D.size = size;
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0))
+        {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             input = mousePosition.x - transform.position.x;
         }
-        else {
+        else
+        {
             input = Input.GetAxisRaw("Horizontal");
         }
     }
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         myRigidbody2D.velocity = Vector2.right * input * speed;
     }
+    // private void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if (other.gameObject.CompareTag("Penguin"))
+    //     {
+    //         LevelManager.instance.AddPenguin();
+    //     }
+    // }
 }

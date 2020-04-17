@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
     public int penguinToRescue = 1;
     public bool isPause;
     public int levelIndex;
+    private Ball mainBall;
+    private Paddle mainPaddle;
     [SerializeField]
     TextMeshProUGUI levelText, penguinText;
     [SerializeField]
@@ -19,7 +21,10 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
+        mainBall = FindObjectOfType<Ball>();
+        mainPaddle = FindObjectOfType<Paddle>();
         levelText.text = "Level " + (levelIndex + 1);
+        mainBall.Respawn();
     }
     private void Update()
     {
@@ -56,6 +61,8 @@ public class LevelManager : MonoBehaviour
     public void UserSelectPause()
     {
         isPause = !isPause;
+        mainBall.myRigidbody2D.simulated = !isPause;
+        mainPaddle.myRigidbody2D.simulated = !isPause;
         if (isPause)
         {
             pausePanelAnimator.SetTrigger("In");

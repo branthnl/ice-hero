@@ -4,16 +4,16 @@
 public class Ball : MonoBehaviour
 {
     public float speed = 3.0f;
-    private Rigidbody2D myRigidbody2D;
+    private float defaultSpeed;
+    [HideInInspector]
+    public Rigidbody2D myRigidbody2D;
     private Vector3 startPosition;
     private bool isMoving;
     private void Awake()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
-    }
-    private void Update()
-    {
+        defaultSpeed = speed;
     }
     private void FixedUpdate()
     {
@@ -23,7 +23,7 @@ public class Ball : MonoBehaviour
             float vsp = myRigidbody2D.velocity.y;
             if (Mathf.Abs(vsp) < speed)
             {
-                myRigidbody2D.velocity += new Vector2(0, ((speed * Mathf.Sign(vsp == 0? 1 : vsp)) - vsp) * 0.1f);
+                myRigidbody2D.velocity += new Vector2(0, ((speed * Mathf.Sign(vsp == 0 ? 1 : vsp)) - vsp) * 0.1f);
             }
         }
         else
@@ -31,10 +31,10 @@ public class Ball : MonoBehaviour
             transform.position = startPosition + new Vector3(0, Mathf.Sin(Time.time * 10.0f) * 0.05f, 0);
         }
     }
-    public void Start()
-    {
-        Respawn();
-    }
+    // public void Start()
+    // {
+    //     Invoke("Respawn", 3.0f);
+    // }
     public void Respawn()
     {
         isMoving = false;
@@ -45,6 +45,7 @@ public class Ball : MonoBehaviour
     public void FirstMove()
     {
         isMoving = true;
+        speed = defaultSpeed;
         myRigidbody2D.velocity = new Vector2(Random.Range(-3.0f, 3.0f), 3.0f) * speed;
     }
     private void OnCollisionEnter2D(Collision2D other)
@@ -53,6 +54,7 @@ public class Ball : MonoBehaviour
         {
             float xDiff = transform.position.x - other.transform.position.x;
             myRigidbody2D.velocity += new Vector2(xDiff, 0);
+            speed = Mathf.Min(speed + 0.1f, defaultSpeed * 2);
         }
     }
 }
