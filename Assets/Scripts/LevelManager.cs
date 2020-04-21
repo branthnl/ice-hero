@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [HideInInspector]
     public Paddle mainPaddle;
     [SerializeField]
-    private GameObject fireworks, pauseButton;
+    private GameObject fireworks, pauseButton, ballPrefab;
     [SerializeField]
     private AudioClip resultMusic;
     [SerializeField]
@@ -66,6 +66,10 @@ public class LevelManager : MonoBehaviour
             GameManager.Instance.SaveProgress(levelIndex + 1);
             isGameOver = true;
         }
+    }
+    public void AddBall()
+    {
+        Instantiate(ballPrefab, new Vector3(0, -7.25f, 0), Quaternion.identity);
     }
     public void UserSelectNext()
     {

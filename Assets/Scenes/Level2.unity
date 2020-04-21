@@ -8229,6 +8229,8 @@ MonoBehaviour:
   mainPaddle: {fileID: 0}
   fireworks: {fileID: 1967034393}
   pauseButton: {fileID: 37087907}
+  ballPrefab: {fileID: 8398600007506010647, guid: 598d0efb3bcb08a4c9b95da31e9577b2,
+    type: 3}
   resultMusic: {fileID: 8300000, guid: eaad265d4213a35439a6dd9b5b34485e, type: 3}
   levelText: {fileID: 1143996805}
   penguinText: {fileID: 149786954}

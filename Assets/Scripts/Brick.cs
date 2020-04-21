@@ -7,8 +7,12 @@ public class Brick : MonoBehaviour
 {
     public int lives = 1;
     public Color[] colorsPerLive;
+    private bool isDie = false;
     private SpriteRenderer mySpriteRenderer;
     private Animator myAnimator;
+    [SerializeField]
+    private GameObject[] powerUpPrefabs;
+    private int startLives;
     private void Awake()
     {
         mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -17,6 +21,7 @@ public class Brick : MonoBehaviour
     private void Start()
     {
         UpdateColor();
+        startLives = lives;
     }
     private void UpdateColor()
     {
@@ -27,11 +32,17 @@ public class Brick : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (isDie) return;
         if (other.gameObject.CompareTag("Ball"))
         {
             --lives;
             if (lives <= 0)
             {
+                isDie = true;
+                if (Random.Range(0, 10) < startLives * 2)
+                {
+                    Instantiate(powerUpPrefabs[Random.Range(0, powerUpPrefabs.Length)], transform.position, Quaternion.identity);
+                }
                 myAnimator.SetTrigger("Out");
                 Destroy(gameObject, 0.1f);
             }

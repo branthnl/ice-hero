@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
+        startPosition.x += Random.Range(-0.1f, 0.1f);
         defaultSpeed = speed;
     }
     private void FixedUpdate()
@@ -28,7 +29,7 @@ public class Ball : MonoBehaviour
         }
         else
         {
-            transform.position = startPosition + new Vector3(LevelManager.instance.mainPaddle.transform.position.x, Mathf.Sin(Time.time * 10.0f) * 0.05f, 0);
+            transform.position = startPosition + new Vector3(LevelManager.instance.mainPaddle.transform.position.x, 0, 0);
         }
     }
     public void Start()
@@ -42,7 +43,7 @@ public class Ball : MonoBehaviour
         if (!LevelManager.instance.isGameOver)
         {
             GameManager.Instance.PlaySound("Check");
-            transform.position = startPosition + new Vector3(LevelManager.instance.mainPaddle.transform.position.x, Mathf.Sin(Time.time * 10.0f) * 0.05f, 0);
+            transform.position = startPosition + new Vector3(LevelManager.instance.mainPaddle.transform.position.x, 0, 0);
             Invoke("FirstMove", 1.0f);
         }
     }

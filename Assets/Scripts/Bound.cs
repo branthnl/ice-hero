@@ -6,7 +6,9 @@ public class Bound : MonoBehaviour
     {
         if (other.CompareTag("Ball"))
         {
-            other.GetComponent<Ball>().Respawn();
+            // other.GetComponent<Ball>().Respawn();
+            if (LevelManager.instance.isGameOver || FindObjectsOfType<Ball>().Length > 1) return;
+            LevelManager.instance.UserSelectRestart();
         }
         else if (other.CompareTag("Penguin"))
         {
